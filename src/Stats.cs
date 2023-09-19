@@ -258,6 +258,9 @@ namespace Greenstack.GameStats
 
 		public T Min { get; set; } = T.Zero;
 
+		/// <summary>
+		/// Is this resource completely drained?
+		/// </summary>
 		public bool IsDepleted => CurrentValue == Min;
 
 #pragma warning disable 8618 // CurrentValue is a setter for _currentValue
