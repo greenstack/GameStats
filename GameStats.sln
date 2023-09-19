@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStats", "src\GameStats.csproj", "{17981B08-2CA1-40BA-999C-5F5FCFEEBAE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{C3664E51-AAE3-49FF-8897-447970CB4BEF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17981B08-2CA1-40BA-999C-5F5FCFEEBAE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17981B08-2CA1-40BA-999C-5F5FCFEEBAE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17981B08-2CA1-40BA-999C-5F5FCFEEBAE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17981B08-2CA1-40BA-999C-5F5FCFEEBAE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3664E51-AAE3-49FF-8897-447970CB4BEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3664E51-AAE3-49FF-8897-447970CB4BEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3664E51-AAE3-49FF-8897-447970CB4BEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3664E51-AAE3-49FF-8897-447970CB4BEF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
