@@ -1,1 +1,2 @@
-﻿global using NUnit.Framework;
+﻿global using Greenstack.GameStats;
+global using NUnit.Framework;
