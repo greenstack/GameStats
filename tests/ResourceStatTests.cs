@@ -2,11 +2,6 @@
 
 public class ResourceStatTests
 {
-    [SetUp]
-    public void Setup()
-    {
-    }
-
     [Test]
     public void TestIncrease()
     {
@@ -40,5 +35,33 @@ public class ResourceStatTests
 
         stat.Reduce(10);
         Assert.That(stat.CurrentValue, Is.EqualTo(stat.Min));
+    }
+
+    [Test]
+    public void TestDeplete()
+    {
+        ResourceStat<int> stat = new()
+        {
+            CurrentValue = 10,
+            Max = 20,
+            Min = 0,
+        };
+
+        stat.Deplete();
+        Assert.That(stat.CurrentValue, Is.EqualTo(stat.Min));
+    }
+
+    [Test]
+    public void TestReplenish()
+    {
+        ResourceStat<int> stat = new()
+        {
+            CurrentValue = 10,
+            Max = 20,
+            Min = 0,
+        };
+
+        stat.RestoreInFull();
+        Assert.That(stat.CurrentValue, Is.EqualTo(stat.Max));
     }
 }
