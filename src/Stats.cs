@@ -28,7 +28,7 @@ namespace Greenstack.GameStats
 	// TODO: Create unit tests for these stats
 
 	#region Delegates
-	public delegate void StatValueChanged<T>(T oldValue, IStat<T> newValue) where T : INumber<T>;
+	public delegate void StatValueChanged<T>(IStat<T> newValue, T oldValue) where T : INumber<T>;
 	#endregion
 
 	#region Interfaces
@@ -251,7 +251,7 @@ namespace Greenstack.GameStats
 				_currentValue = T.Clamp(value, Min, Max);
 				if (_currentValue != oldValue)
 				{
-					OnStatChanged?.Invoke(oldValue, this);
+					OnStatChanged?.Invoke(this, oldValue);
 				}
 			}
 		}
@@ -310,7 +310,7 @@ namespace Greenstack.GameStats
 				if (_currentValue != value)
 				{
 					_currentValue = value;
-					OnStatChanged?.Invoke(_currentValue, this);
+					OnStatChanged?.Invoke(this, _currentValue);
 				}
 			}
 		}
