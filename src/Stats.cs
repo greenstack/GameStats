@@ -224,7 +224,7 @@ namespace Greenstack.GameStats
 	/// A modifier for various stats.
 	/// </summary>
 	/// <typeparam name="T">The type of number that does the modification.</typeparam>
-	public interface IStatModifier<T>
+	public interface IStatModifier<T> : IStatModifier
 		where T : INumber<T>
 	{
 		T ModificationValue { get; }
