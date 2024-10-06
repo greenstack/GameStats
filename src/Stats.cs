@@ -292,6 +292,11 @@ namespace Greenstack.GameStats
 		{
 			CurrentValue -= amount;
 		}
+
+		public bool HasAtLeast(T amount)
+		{
+			return CurrentValue >= amount;
+		}
 	}
 
 	/// <summary>
