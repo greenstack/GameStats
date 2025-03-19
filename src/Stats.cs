@@ -297,6 +297,16 @@ namespace Greenstack.GameStats
 		{
 			return CurrentValue >= amount;
 		}
+
+		public bool IsFull()
+		{
+			return CurrentValue == Max;
+		}
+
+		public bool IsEmpty()
+		{
+			return CurrentValue == Min;
+		}
 	}
 
 	/// <summary>
