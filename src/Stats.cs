@@ -20,6 +20,7 @@
  * IN THE SOFTWARE.
  */
 
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 
 namespace Greenstack.GameStats
@@ -331,7 +332,7 @@ namespace Greenstack.GameStats
 			}
 		}
 
-		private ICollection<IStatModifier> _modifiers = new List<IStatModifier>();
+		private readonly ICollection<IStatModifier> _modifiers = [];
 
 		public event StatValueChanged<T>? OnStatChanged;
 
