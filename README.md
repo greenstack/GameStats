@@ -14,3 +14,9 @@ The core stat types are `ResourceStat<T>` and `ModifiableStat<T>`. `T` is constr
  - `ModifiableStat<T>`: This status is used to track a stat that has a definite value, but can be modified in some way and reset to that core value. This class is valuable to act as a proxy over a value that should be preserved or reset to a regular value after a battle ends, as ModifiableStats don't alter its main value as modifications come an and out.
 
 Each of these stats come with helper methods to query and operate on their internal values, as well as to compare them against raw values and other stats.
+
+## Contributors
+Many thanks to those that have assisted in the development of this library!
+
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end >
