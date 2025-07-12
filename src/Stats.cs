@@ -320,6 +320,7 @@ namespace Greenstack.GameStats
 		public T CurrentValue
 		{
 			get => _currentValue;
+			[MemberNotNull(nameof(_currentValue))]
 			protected set
 			{
 				if (_currentValue != value)
