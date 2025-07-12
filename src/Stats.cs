@@ -44,17 +44,23 @@ namespace Greenstack.GameStats
 		/// </summary>
 		T CurrentValue { get; }
 
-		public static bool operator >(IStat<T> lhs, IStat<T> rhs) =>
-			lhs.CurrentValue > rhs.CurrentValue;
+		public static bool operator >(IStat<T> lhs, T value) =>
+			lhs.CurrentValue > value;
 
-		public static bool operator <(IStat<T> lhs, IStat<T> rhs) =>
-			lhs.CurrentValue < rhs.CurrentValue;
+		public static bool operator <(IStat<T> lhs, T value) =>
+			lhs.CurrentValue < value;
 
-		public static bool operator >=(IStat<T> lhs, IStat<T> rhs) =>
-			lhs.CurrentValue >= rhs.CurrentValue;
+		public static bool operator >=(IStat<T> lhs, T value) =>
+			lhs.CurrentValue >= value;
 
-		public static bool operator <=(IStat<T> lhs, IStat<T> rhs) =>
-			lhs.CurrentValue <= rhs.CurrentValue;
+		public static bool operator <=(IStat<T> lhs, T value) =>
+			lhs.CurrentValue <= value;
+
+		public static bool operator ==(IStat<T> lhs, T value) =>
+			lhs.CurrentValue == value;
+
+		public static bool operator !=(IStat<T> lhs, T value) =>
+			lhs.CurrentValue != value;
 
 		public static T operator *(T lhs, IStat<T> rhs) =>
 			lhs * rhs.CurrentValue;
