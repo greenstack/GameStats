@@ -37,7 +37,7 @@ namespace Greenstack.GameStats
 	/// Basic interface for a statistic.
 	/// </summary>
 	/// <typeparam name="T">The underlying type for this stat.</typeparam>
-	public interface IStat<T>
+	public interface IStat<T> : IComparable<IStat<T>>
 		where T : INumber<T>
 	{
 		/// <summary>
@@ -62,6 +62,12 @@ namespace Greenstack.GameStats
 
 		public static T operator *(IStat<T> lhs, T rhs) =>
 			lhs.CurrentValue * lhs;
+
+		int IComparable<IStat<T>>.CompareTo(IStat<T>? other)
+		{
+			if (other is null) return 1;
+			return CurrentValue.CompareTo(other.CurrentValue);
+		}
 
 		event StatValueChanged<T> OnStatChanged;
 	}
@@ -185,6 +191,10 @@ namespace Greenstack.GameStats
 		void Reset();
 	}
 
+	/// <summary>
+	/// Represents a stat whose value can be incremented, decremented, and so forth.
+	/// </summary>
+	/// <typeparam name="T">The underlying type of this stat.</typeparam>
 	public interface IResourceStat<T> : IClampedStat<T>, IReplenishableStat<T>, IDepleteableStat<T>
 		where T : INumber<T>, IMinMaxValue<T>
 	{
@@ -198,6 +208,10 @@ namespace Greenstack.GameStats
 	public interface IModifiableStat<T> : IResettableStat<T>
 		where T : INumber<T>
 	{
+		/// <summary>
+		/// Applies the modifier to this stat.
+		/// </summary>
+		/// <param name="modifier">The modifier to apply.</param>
 		void AddModifier(IStatModifier modifier);
 	}
 	#endregion Interfaces
@@ -246,9 +260,11 @@ namespace Greenstack.GameStats
 		public required T CurrentValue
 		{
 			get => _currentValue;
+			[MemberNotNull(nameof(_currentValue))]
 			set
 			{
-				T oldValue = _currentValue;
+				ArgumentNullException.ThrowIfNull(value, nameof(CurrentValue));
+				T oldValue = _currentValue!; // This value can never be null because of line 260
 				_currentValue = T.Clamp(value, Min, Max);
 				if (_currentValue != oldValue)
 				{
@@ -264,13 +280,10 @@ namespace Greenstack.GameStats
 		/// </summary>
 		public bool IsDepleted => CurrentValue == Min;
 
-#pragma warning disable 8618 // CurrentValue is a setter for _currentValue
 		/// <summary>
-		/// 
+		/// Default constructor for resource stats.
 		/// </summary>
-		/// <param name="currentValue"></param>
 		public ResourceStat()
-#pragma warning restore 8618
 		{
 		}
 
@@ -294,16 +307,29 @@ namespace Greenstack.GameStats
 			CurrentValue -= amount;
 		}
 
+		/// <summary>
+		/// Checks if the stat's current value is at least the amount.
+		/// </summary>
+		/// <param name="amount">The amount to query against.</param>
+		/// <returns>True if CurrentValue is greater than or equal to amount.</returns>
 		public bool HasAtLeast(T amount)
 		{
 			return CurrentValue >= amount;
 		}
 
+		/// <summary>
+		/// Is this stat's current value equal to its maximum value?
+		/// </summary>
+		/// <returns><c>true</c> if the <see cref="CurrentValue"/> is equal to <see cref="Max"/>.</returns>
 		public bool IsFull()
 		{
 			return CurrentValue == Max;
 		}
 
+		/// <summary>
+		/// Is this stat's current value equal to its minimum value?
+		/// </summary>
+		/// <returns><c>true</c> if <see cref="CurrentValue"/> is equal to <see cref="Min"/>.</returns>
 		public bool IsEmpty()
 		{
 			return CurrentValue == Min;
