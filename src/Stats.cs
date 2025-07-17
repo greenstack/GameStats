@@ -248,6 +248,10 @@ namespace Greenstack.GameStats
 
 	#region Classes
 
+	/// <summary>
+	/// Represents a stat that contains a value that is constrained to a range and can be increased and decreased.
+	/// </summary>
+	/// <typeparam name="T">The numeric type contained in this object.</typeparam>
 	public class ResourceStat<T> : IResourceStat<T>
 		where T : INumber<T>, IMinMaxValue<T>
 	{
@@ -283,8 +287,17 @@ namespace Greenstack.GameStats
 		/// <summary>
 		/// Default constructor for resource stats.
 		/// </summary>
-		public ResourceStat()
+		public ResourceStat(T? min = default, T? max = default, T? currentValue = default)
 		{
+			Min = min ?? T.Zero;
+			Max = max ?? T.MaxValue;
+			CurrentValue = currentValue ?? Max;
+		}
+
+		public ResourceStat(T? min = default, T? max = default, float percent = 1)
+		{
+			Min = min ?? T.Zero;
+			Max = max ?? T.MaxValue;
 		}
 
 		public void Increase(T amount)
