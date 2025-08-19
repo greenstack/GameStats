@@ -44,30 +44,6 @@ namespace Greenstack.GameStats
 		/// </summary>
 		T CurrentValue { get; }
 
-		public static bool operator >(IStat<T> lhs, T value) =>
-			lhs.CurrentValue > value;
-
-		public static bool operator <(IStat<T> lhs, T value) =>
-			lhs.CurrentValue < value;
-
-		public static bool operator >=(IStat<T> lhs, T value) =>
-			lhs.CurrentValue >= value;
-
-		public static bool operator <=(IStat<T> lhs, T value) =>
-			lhs.CurrentValue <= value;
-
-		public static bool operator ==(IStat<T> lhs, T value) =>
-			lhs.CurrentValue == value;
-
-		public static bool operator !=(IStat<T> lhs, T value) =>
-			lhs.CurrentValue != value;
-
-		public static T operator *(T lhs, IStat<T> rhs) =>
-			lhs * rhs.CurrentValue;
-
-		public static T operator *(IStat<T> lhs, T rhs) =>
-			lhs.CurrentValue * lhs;
-
 		event StatValueChanged<T> OnStatChanged;
 	}
 
@@ -242,6 +218,62 @@ namespace Greenstack.GameStats
 	public class ResourceStat<T> : IResourceStat<T>
 		where T : INumber<T>, IMinMaxValue<T>
 	{
+		public static bool operator >(ResourceStat<T> lhs, T value) =>
+			lhs.CurrentValue > value;
+
+		public static bool operator <(ResourceStat<T> lhs, T value) =>
+			lhs.CurrentValue < value;
+
+		public static bool operator >=(ResourceStat<T> lhs, T value) =>
+			lhs.CurrentValue >= value;
+
+		public static bool operator <=(ResourceStat<T> lhs, T value) =>
+			lhs.CurrentValue <= value;
+
+		public static bool operator ==(ResourceStat<T> lhs, T value) =>
+			lhs.CurrentValue == value;
+
+		public static bool operator !=(ResourceStat<T> lhs, T value) =>
+			lhs.CurrentValue != value;
+
+		public static T operator *(T lhs, ResourceStat<T> rhs) =>
+			lhs * rhs.CurrentValue;
+
+		public static T operator *(ResourceStat<T> lhs, T rhs) =>
+			lhs.CurrentValue * rhs;
+
+		public static bool operator >(ResourceStat<T> lhs, ResourceStat<T> rhs) =>
+			lhs.CurrentValue > rhs.CurrentValue;
+
+		public static bool operator <(ResourceStat<T> lhs, ResourceStat<T> rhs) =>
+			lhs.CurrentValue < rhs.CurrentValue;
+
+		public static bool operator >=(ResourceStat<T> lhs, ResourceStat<T> rhs) =>
+			lhs.CurrentValue >= rhs.CurrentValue;
+
+		public static bool operator <=(ResourceStat<T> lhs, ResourceStat<T> rhs) =>
+			lhs.CurrentValue <= rhs.CurrentValue;
+		
+		public static bool operator ==(ResourceStat<T> lhs, ResourceStat<T> rhs) =>
+			lhs.CurrentValue == rhs.CurrentValue;
+		
+		public static bool operator !=(ResourceStat<T> lhs, ResourceStat<T> rhs) =>
+			lhs.CurrentValue != rhs.CurrentValue;
+
+		public override bool Equals(object? obj)
+		{
+			if (obj is ResourceStat<T> other)
+			{
+				return CurrentValue == other.CurrentValue;
+			}
+			return false;
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(CurrentValue, Min, Max);
+		}
+
 		public T Max { get; set; } = T.MaxValue;
 
 		private T _currentValue;
@@ -356,6 +388,7 @@ namespace Greenstack.GameStats
 		/// <param name="currentValue">The current value for the stat.</param>
 		public ModifiableStat(T baseValue, T currentValue)
 		{
+			_currentValue = currentValue;
 			BaseValue = baseValue;
 			CurrentValue = currentValue;
 		}
