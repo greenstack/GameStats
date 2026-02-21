@@ -345,6 +345,11 @@ namespace Greenstack.GameStats
 		{
 			return CurrentValue == Min;
 		}
+
+        public override string ToString()
+        {
+            return $"{CurrentValue}/{Max}";
+        }
 	}
 
 	/// <summary>
