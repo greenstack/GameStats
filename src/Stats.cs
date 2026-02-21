@@ -20,6 +20,7 @@
  * IN THE SOFTWARE.
  */
 
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 
 namespace Greenstack.GameStats
@@ -276,16 +277,19 @@ namespace Greenstack.GameStats
 
 		public T Max { get; set; } = T.MaxValue;
 
-		private T _currentValue;
+		private T _currentValue = T.Zero;
 
 		public event StatValueChanged<T>? OnStatChanged;
 
 		public required T CurrentValue
 		{
 			get => _currentValue;
+			[MemberNotNull(nameof(_currentValue))]
 			set
 			{
-				T oldValue = _currentValue;
+				// Supressing null here because the first time this is called,
+				// we're not going to have any event subscribers yet
+				T oldValue = _currentValue!;
 				_currentValue = T.Clamp(value, Min, Max);
 				if (_currentValue != oldValue)
 				{
@@ -301,14 +305,21 @@ namespace Greenstack.GameStats
 		/// </summary>
 		public bool IsDepleted => CurrentValue == Min;
 
-#pragma warning disable 8618 // CurrentValue is a setter for _currentValue
 		/// <summary>
-		/// 
+		/// Empty constructor.
 		/// </summary>
-		/// <param name="currentValue"></param>
+		[Obsolete($"Use constructor that accepts a parameter for the MaxValue instead")]
 		public ResourceStat()
-#pragma warning restore 8618
 		{
+		}
+
+		/// <summary>
+		/// Creates a resource stat with the maximum value set.
+		/// </summary>
+		/// <param name="maxValue">The maximum value for this resource.</param>
+		public ResourceStat(T maxValue)
+		{
+			Max = maxValue;
 		}
 
 		public void Increase(T amount)
